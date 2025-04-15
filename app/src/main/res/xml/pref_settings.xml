@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/title_pref_settings">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_enable"
+            android:title="@string/title_pref_enable" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_disable_on_screenoff"
+            android:title="@string/title_pref_disable_on_screenoff"
+            android:summary="@string/summary_pref_disable_on_screenoff"/>
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:key="pref_min_screen_bright"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/title_pref_min_screen_bright"
+            android:summary="@string/summary_pref_min_screen_bright" />
+        <EditTextPreference
+            android:defaultValue="90"
+            android:key="pref_max_dim_strength"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/title_pref_max_dim_strength"
+            android:summary="@string/summary_pref_max_dim_strength" />
+
+        <Preference
+            android:enabled="false"
+            android:key="pref_hal_brightness"
+            android:title="@string/title_pref_hal_brightness"
+            android:summary="@string/summary_pref_hal_brightness"/>
+
+        <Preference
+            android:enabled="false"
+            android:key="pref_reduce_bright"
+            android:title="@string/title_pref_reduce_bright"
+            android:summary="@string/summary_pref_reduce_bright"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/title_pref_instructions">
+
+        <Preference
+            android:enabled="false"
+            android:key="pref_instructions"
+            android:summary="@string/summary_pref_instructions" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/title_pref_about">
+
+        <Preference
+            android:summary="https://github.com/ztc1997/FakeDCBacklight"
+            android:title="@string/title_pref_source_code">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/ztc1997/FakeDCBacklight" />
+        </Preference>
+
+        <Preference
+            android:summary="https://github.com/ztc1997/FakeDCBacklight/issues"
+            android:title="@string/title_pref_feedback">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/ztc1997/FakeDCBacklight/issues" />
+        </Preference>
+
+    </PreferenceCategory>
+</PreferenceScreen>
