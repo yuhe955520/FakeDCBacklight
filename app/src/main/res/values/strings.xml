@@ -20,4 +20,6 @@
     <string name="summary_pref_hal_brightness">Cannot obtain HAL Brightness, Activate the module and reboot and try again</string>
     <string name="title_pref_reduce_bright">Current Reduce Bright Strength</string>
     <string name="summary_pref_reduce_bright">Cannot obtain Reduce Bright Strength, Activate the module and reboot and try again</string>
+	<string name="title_pref_disable_on_aod_doze">Disable on AOD/Doze</string>
+	<string name="summary_pref_disable_on_aod_doze">Disable fake DC when display state is DOZE or DOZE_SUSPEND. Useful for some OxygenOS/ColorOS devices where AOD is not treated as true screen-off.</string>
 </resources>

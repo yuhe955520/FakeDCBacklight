@@ -13,6 +13,12 @@
             android:key="pref_disable_on_screenoff"
             android:title="@string/title_pref_disable_on_screenoff"
             android:summary="@string/summary_pref_disable_on_screenoff"/>
+			
+		<SwitchPreference
+            android:key="pref_disable_on_aod_doze"
+            android:title="@string/title_pref_disable_on_aod_doze"
+            android:summary="@string/summary_pref_disable_on_aod_doze"
+            android:defaultValue="false" />	
 
         <EditTextPreference
             android:defaultValue="100"

@@ -1,5 +1,6 @@
 package com.ztc1997.fakedcbacklight
 
+import android.view.Display
 import android.content.Context
 import android.provider.Settings
 import de.robv.android.xposed.*
@@ -37,6 +38,7 @@ class Hook : IXposedHookLoadPackage {
                         try {
                             val localDisplayAdapter = XposedHelpers.getSurroundingThis(param.thisObject)
                             val ctx = XposedHelpers.callMethod(localDisplayAdapter, "getOverlayContext") as Context
+                            val state = param.args[0] as Int
                             val targetBright = param.args[1] as Float
 
                             val enable = getBoolean("pref_enable", true)
@@ -50,16 +52,46 @@ class Hook : IXposedHookLoadPackage {
                                 return
                             }
 
+                            
                             val minScreenBright = getFloat("pref_min_screen_bright", 1f)
-                            if (targetBright >= minScreenBright || 
-                                (targetBright < 0 && getBoolean("pref_disable_on_screenoff", false))) {
-                                Settings.Secure.putInt(ctx.contentResolver, "reduce_bright_colors_level", 0)
+                            
+                            val disableOnScreenoff = getBoolean("pref_disable_on_screenoff", false)
+                            val disableOnAodDoze = getBoolean("pref_disable_on_aod_doze", false)
+                            
+                            val isDozeState =
+                                state == Display.STATE_DOZE ||
+                                state == Display.STATE_DOZE_SUSPEND
+                            
+                            // New logic: optional disable on AOD/doze
+                            if (disableOnAodDoze && isDozeState) {
+                                Settings.Secure.putInt(
+                                    ctx.contentResolver, "reduce_bright_colors_level", 0
+                                )
+                                Settings.Secure.putInt(
+                                    ctx.contentResolver, "reduce_bright_colors_activated", 0
+                                )
+                            }
+                            // Original logic kept intact
+                            else if (
+                                targetBright >= minScreenBright ||
+                                (targetBright < 0 && disableOnScreenoff)
+                            ) {
+                                Settings.Secure.putInt(
+                                    ctx.contentResolver, "reduce_bright_colors_level", 0
+                                )
+                                Settings.Secure.putInt(
+                                    ctx.contentResolver, "reduce_bright_colors_activated", 0
+                                )
                             } else if (targetBright >= 0) {
-                                val dim = (1 - (targetBright / minScreenBright)) * getInt("pref_max_dim_strength", 90)
-                                if (checkWriteSettingsPermission(ctx)) {
-                                    Settings.Secure.putInt(ctx.contentResolver, "reduce_bright_colors_level", dim.toInt())
-                                }
-                                Settings.Secure.putInt(ctx.contentResolver, "reduce_bright_colors_activated", 1)
+                                val dim = (1 - (targetBright / minScreenBright)) * getInt(
+                                    "pref_max_dim_strength", 90
+                                )
+                                Settings.Secure.putInt(
+                                    ctx.contentResolver, "reduce_bright_colors_level", dim.toInt()
+                                )
+                                Settings.Secure.putInt(
+                                    ctx.contentResolver, "reduce_bright_colors_activated", 1
+                                )
                                 param.args[1] = minScreenBright
                             }
                         } catch (e: Throwable) {

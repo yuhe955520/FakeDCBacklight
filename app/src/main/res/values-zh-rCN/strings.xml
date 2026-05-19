@@ -20,4 +20,6 @@
     <string name="summary_pref_hal_brightness">无法获取 HAL 亮度，激活模块并重启，然后重试</string>
     <string name="title_pref_reduce_bright">当前压暗强度</string>
     <string name="summary_pref_reduce_bright">无法获取压暗强度，激活模块并重启，然后重试</string>
+	<string name="title_pref_disable_on_aod_doze">AOD/Doze 时禁用</string>
+	<string name="summary_pref_disable_on_aod_doze">当显示状态为 DOZE 或 DOZE_SUSPEND 时禁用伪 DC 调光。适用于部分 OxygenOS/ColorOS 机型，因为这些机型的 AOD 不会被识别为真正息屏。</string>
 </resources>
